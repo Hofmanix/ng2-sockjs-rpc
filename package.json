@@ -1,0 +1,53 @@
+{
+  "name": "ng2-sockjs-rpc",
+  "version": "0.1.1",
+  "description": "Angular 2 client library for \"RPC\" with sockjs websockets library",
+  "scripts": {
+    "test": "tsc && karma start",
+    "prepublish": "tsc",
+    "tsc": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Hofmanix/ng2-sockjs-rpc.git"
+  },
+  "author": {
+    "name": "Hofmanix",
+    "email": "ondrejhartman@hotmail.com"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "sockjs",
+    "rpc"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Hofmanix/ng2-sockjs-rpc.git/issues"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "@angular/core": "^2.0.0",
+    "@angular/common": "^2.0.0",
+    "codelyzer": "^0.0.28",
+    "rxjs": "^5.0.1",
+    "typescript": "2.0.2",
+    "zone.js": "0.7.2",
+    "@types/es6-shim": "^0.31.32",
+    "@types/protractor": "^4.0.0",
+    "@types/jasmine": "^2.5.40",
+    "@types/selenium-webdriver": "^2.53.39"
+  },
+  "peerDependencies": {
+    "@angular/core": "^2.0.0",
+    "rxjs": "^5.0.0-beta.12",
+    "zone.js": "^0.6.26"
+  },
+  "engines": {
+    "node": ">=0.8.0"
+  }
+}
