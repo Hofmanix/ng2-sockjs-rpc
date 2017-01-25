@@ -17,6 +17,11 @@ export interface IRequest {
 	data:any;
 }
 
+export enum WSType {
+	SOCKJS,
+	WEBSOCKETS
+}
+
 /*
   Generated class for the Websockets provider.
 
@@ -33,8 +38,10 @@ export class SockJsRpcProvider {
 	private waitingForResponse: {[id:string]: Subject<any>};
 	private onConnectedSubject:Subject<any> = new Subject();
 	private onCloseSubject: Subject<any> = new Subject();
+	private onErrorSubject: Subject<any> = new Subject();
 	private onMessageSubject: Subject<any> = new Subject();
 	public onClose$:Observable<any> = this.onCloseSubject.asObservable();
+	public onError$:Observable<any> = this.onErrorSubject.asObservable();
 	public onMessage$:Observable<any> = this.onMessageSubject.asObservable();
 
 	constructor(public ngZone: NgZone) {
@@ -42,13 +49,25 @@ export class SockJsRpcProvider {
 		this.waitingForResponse = {};
 	}
 
-	public connect(address:string) {
+	public connect(address:string, type:WSType = WSType.SOCKJS) {
 		let that = this;
 		this.address = address;
-		this.socket = new SockJS(address);
+		switch (type) {
+			case WSType.WEBSOCKETS:
+				this.socket = new WebSocket(address);
+				break;
+			case WSType.SOCKJS:
+				this.socket = new SockJS(address);
+				break;
+			default:
+				this.socket = new SockJS(address);
+		}
 		this.socket.onopen = e => that.ngZone.run(() => that.onOpen());
 		this.socket.onmessage = e => that.ngZone.run(() => that.onMessage(e));
 		this.socket.onclose = e => that.ngZone.run(() => that.onClose());
+		if(type == WSType.WEBSOCKETS) {
+			this.socket.onerror = e => that.ngZone.run(() => that.onError(e));
+		}
 
 		return this.onConnectedSubject.asObservable();
 	}
@@ -83,6 +102,10 @@ export class SockJsRpcProvider {
 	}
 
 	private onOpen() {
+	}
+
+	private onError(evt) {
+		this.onErrorSubject.next(evt);
 	}
 
 	private onMessage(e) {

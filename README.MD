@@ -48,7 +48,7 @@ Once your library is imported, you can use its provider, in your Angular applica
 ```typescript
 import { Component } from '@angular/core';
 
-import { SockJsRpcProvider } from 'ng2-sockjs-rpc';
+import { SockJsRpcProvider, WSType } from 'ng2-sockjs-rpc';
 
 
 @Component({
@@ -71,6 +71,9 @@ export class MyApp {
 		});
 	}
 }
+
+//You can also choose to use classic websockets by adding type to the connect function
+sockJsRpcProvider.connect("ws://localhost", WSType.WEBSOCKETS).subscribe();
 
 ```
 
