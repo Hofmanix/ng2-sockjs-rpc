@@ -62,7 +62,6 @@ export class SockJsRpcProvider {
 			default:
 				this.socket = new SockJS(address);
 		}
-		this.socket.onopen = e => that.ngZone.run(() => that.onConnectedSubject.next(e));
 		this.socket.onmessage = e => that.ngZone.run(() => that.onMessage(e));
 		this.socket.onclose = e => that.ngZone.run(() => that.onClose());
 		if(type == WSType.WEBSOCKETS) {
